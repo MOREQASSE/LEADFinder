@@ -1,0 +1,399 @@
+================================================================================
+                           Devaxio LEAD Finder
+                        Web App Concept Specification
+================================================================================
+
+PROJECT OVERVIEW
+================================================================================
+Devaxio LEAD Finder is a web application that automatically finds potential
+clients needing websites across multiple free platforms, generates AI-powered
+draft replies, and manages lead tracking for a small team of web developers.
+
+TARGET USERS: 1 admin + 2-3 team members (multi-user)
+HOSTING: Localhost (user's own PC)
+BUDGET: $0 (using free tiers & APIs)
+
+================================================================================
+DATA SOURCES (ALL FREE, DAY ONE)
+================================================================================
+
+1. Reddit (posts + comments)      - API via PRAW, every 2 minutes
+2. Craigslist                     - RSS feeds, every 30 minutes
+3. Upwork                         - RSS feeds, every 60 minutes
+4. Google Alerts                  - Email parsing, every 6 hours
+5. Mastodon                       - Open API, every 5 minutes
+6. Indeed                         - RSS feeds, every 60 minutes
+7. Hacker News                    - RSS/monthly threads, every 60 minutes
+
+================================================================================
+LEAD DATA FIELDS (MINIMUM REQUIRED)
+================================================================================
+
+Each lead stores:
+- Title              (post title or question)
+- Platform name      (Reddit, Craigslist, Upwork, etc.)
+- URL                (direct link to original post)
+- Timestamp          (when posted/detected)
+- Author             (username)
+- Budget mentioned   (normalized range, see below)
+- Description        (post content / question text)
+
+================================================================================
+BUDGET NORMALIZATION & CURRENCY CONVERSION
+================================================================================
+
+Normalized ranges (stored in database, user-modifiable):
+- $0-100           → Low
+- $100-500         → Low/Medium
+- $500-1000        → Medium
+- $1000+           → High
+- unknown          → Unknown
+
+Currency Conversion:
+- Original currency preserved and displayed (USD, EUR, MAD, etc.)
+- Auto-converted to Moroccan Dirham (MAD) for comparison
+- Exchange rates: can be updated via settings or approximate (~9-11 MAD per USD)
+
+Example display:
+  "$500 budget"     → "$500 (~ 5,000 MAD)" + Rank: Hot/Warm
+  "€100"            → "€100 (~ 1,050 MAD)" + Rank: Cold
+  "2000 MAD budget" → "2000 MAD" + Rank: Warm
+
+================================================================================
+LEAD RANKING SYSTEM (SIMPLE + COLOR CODED)
+================================================================================
+
+Hot (RED)          : Budget $1000+ OR urgent keywords (urgent, company, ASAP)
+Warm (ORANGE)      : Budget $100-1000 OR startup/small business keywords
+Cold (BLUE)        : Budget $0-100 OR contains (free, cheap, for friend)
+
+Budget ranges stored in database. Admin can modify:
+- Low range boundary (MAD)
+- Medium range boundary (MAD)
+- High range boundary (MAD)
+- Rank assignment per range
+
+Custom keyword rules (admin configurable):
+- Boost keywords    : "urgent", "asap", "company" → +1 tier
+- Blacklist keywords: "scam", "fake" → auto-archive/spam
+- Tag keywords      : "wordpress", "shopify", "ecommerce" → add tag no rank change
+
+================================================================================
+USER WORKFLOW (PER LEAD)
+================================================================================
+
+Step 1: Lead detected by scraper → saved to database
+Step 2: Notification sent (bell icon in dashboard + email to user)
+Step 3: AI generates draft reply (based on parsed resume data)
+Step 4: Lead appears in dashboard with draft ready
+Step 5: User reviews draft → clicks "Send" button
+Step 6: Reply sent via platform's official API/method
+
+Optional Toggle: Auto-send mode (platform-specific)
+- When enabled, automatically sends approved-quality drafts
+- Respects daily limits and rate limits (settings configurable)
+- Can be toggled ON/OFF per platform
+
+================================================================================
+REPLY DRAFT GENERATION (AI)
+================================================================================
+
+AI Model Configuration:
+- Primary: OpenRouter (free tier models: Mistral, Llama, Gemma)
+- Failover: GitHub Models beta (free with GitHub account)
+- Models & providers selectable via settings page
+- Auto-switch when model hits rate limits
+
+AI Input Data (parsed from resume upload):
+- Name
+- Portfolio URL
+- Typical pricing range (websites from X to Y MAD)
+- Website types specialized (e-commerce, portfolio, blog, custom web apps)
+- Location / timezone
+- Past project examples (uploaded descriptions)
+- Preferred voice/tone (professional, friendly, casual, technical)
+- Availability (e.g., "can start within 3 days")
+
+Resume Upload → AI parses → Stores as structured data brackets for drafting.
+
+================================================================================
+SAFETY LIMITS (CONFIGURABLE PER PLATFORM)
+================================================================================
+
+Daily Limits (default values):
+- Reddit: 20 replies/day
+- Craigslist: 10 replies/day
+- Upwork: 15 replies/day
+- Mastodon: 30 replies/day
+- Indeed: 10 replies/day
+- Hacker News: 5 replies/day
+
+Rate Limits (per hour):
+- Reddit: 3/hour
+- Craigslist: 1/hour
+- Upwork: 2/hour
+- Mastodon: 5/hour
+- Indeed: 2/hour
+- Hacker News: 1/hour
+
+All limits adjustable via Admin Settings menu.
+
+================================================================================
+DUPLICATE PREVENTION
+================================================================================
+
+- Check URL: if exact post URL already in database → skip or mark duplicate
+- No auto-reply to same URL twice
+- Admin can manually override and force reply if needed
+
+================================================================================
+DASHBOARD FEATURES
+================================================================================
+
+Multiple Views (user-switchable):
+1. Simple List      - Chronological, newest first
+2. Kanban Board     - Columns: New → Drafted → Replied → Archived
+3. Split View       - List on left, lead details + reply editor on right
+
+Search + Filter:
+- By platform
+- By rank (Hot/Warm/Cold)
+- By budget range
+- By date range
+- By keyword in title/description
+- By reply status (draft ready, sent, pending, failed)
+
+================================================================================
+NOTIFICATION SYSTEM
+================================================================================
+
+- In-app bell icon: Real-time notifications for new leads
+- Email: Configurable (instant per lead OR daily digest)
+- Email delivery via user's own Gmail SMTP (free, ~500 emails/day)
+
+================================================================================
+FAILED REPLY HANDLING
+================================================================================
+
+Retry strategy: 3 attempts with exponential backoff
+- Attempt 1: wait 1 minute
+- Attempt 2: wait 5 minutes
+- Attempt 3: wait 15 minutes
+- After 3 failures: Log error to database for manual review
+
+User can manually retry from dashboard.
+
+================================================================================
+DATABASE (SQLite)
+================================================================================
+
+File: Devaxio.db (single file on user's PC)
+Storage: Local hard drive, backed up by copying .db file
+Performance: Works for 3-4 concurrent users with proper connection handling
+
+Key Tables:
+- users
+- leads
+- replies
+- settings (budget ranges, limits, keywords)
+- ai_config (models, provider settings)
+- resume_data (parsed AI context)
+- notifications
+- logs
+
+================================================================================
+TECH STACK (FULL)
+================================================================================
+
+BACKEND
+- Language: Python 3.11+
+- Framework: FastAPI (async support, auto API docs)
+- Server: Uvicorn (run locally)
+- Auth: Authlib (OAuth for Google/GitHub) + passlib (email/password hashing)
+- Task Scheduling: APScheduler (no Redis needed)
+- HTTP Client: httpx (async for scraping)
+
+FRONTEND
+- Framework: React 18+
+- Styling: Tailwind CSS
+- State: React Context + useReducer (or Zustand if complexity grows)
+- HTTP: Axios (to call FastAPI backend)
+- UI Components: Headless UI (accessible modals, menus) + React Table + React Kanban
+
+AI INTEGRATION
+- OpenRouter Python SDK (primary)
+- Direct HTTP fallback for GitHub Models
+- Prompt engineering: templates per platform (Reddit, Mastodon, Indeed styles)
+
+SCRAPING LIBRARIES
+- Reddit: PRAW (Python Reddit API Wrapper)
+- RSS feeds: feedparser (Craigslist, Upwork, Indeed, Hacker News)
+- Google Alerts: imaplib (Gmail parsing) OR Gmail API free tier
+- Mastodon: Mastodon.py (official Python library)
+
+DATABASE
+- SQLite + SQLAlchemy (async version: databases + aiosqlite)
+- Alembic (for database migrations)
+
+================================================================================
+FOLDER STRUCTURE
+================================================================================
+
+Devaxio/
+│
+├── backend/
+│   ├── __init__.py
+│   ├── main.py                 # FastAPI app entry point
+│   ├── config.py               # Settings (load from .env)
+│   ├── database.py             # SQLAlchemy setup
+│   ├── models.py               # All database models
+│   ├── schemas.py              # Pydantic schemas for API
+│   ├── auth.py                 # OAuth + email/password auth
+│   │
+│   ├── routers/
+│   │   ├── auth.py             # Login, register, logout
+│   │   ├── leads.py            # CRUD for leads, ranking
+│   │   ├── replies.py          # Draft, send, retry
+│   │   ├── settings.py         # Budget ranges, limits, keywords
+│   │   ├── dashboard.py        # Stats, notifications
+│   │   └── ai_config.py        # Model/provider selection
+│   │
+│   ├── scrapers/
+│   │   ├── base.py             # Abstract scraper class
+│   │   ├── reddit.py           # PRAW integration
+│   │   ├── craigslist.py       # RSS parser
+│   │   ├── upwork.py           # RSS parser
+│   │   ├── mastodon.py         # Mastodon.py
+│   │   ├── indeed.py           # RSS parser
+│   │   ├── hackernews.py       # RSS parser
+│   │   └── google_alerts.py    # Email parser
+│   │
+│   ├── ai/
+│   │   ├── __init__.py
+│   │   ├── openrouter_client.py
+│   │   ├── github_client.py
+│   │   ├── draft_generator.py  # Prompt templates + orchestration
+│   │   ├── resume_parser.py    # Parse uploaded resume
+│   │   └── fallback.py         # Auto-switch logic between models
+│   │
+│   ├── scheduler.py            # APScheduler jobs
+│   ├── notifications.py        # In-app + email notifications
+│   └── utils/
+│       ├── currency.py         # MAD conversion
+│       ├── ranking.py          # Hot/Warm/Cold logic
+│       └── rate_limiter.py     # Daily/hourly limit checker
+│
+├── frontend/
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── main.jsx            # React entry
+│   │   ├── App.jsx             # Root component + routing
+│   │   ├── index.css           # Tailwind imports
+│   │   │
+│   │   ├── components/
+│   │   │   ├── Layout/
+│   │   │   │   ├── Header.jsx
+│   │   │   │   ├── Sidebar.jsx
+│   │   │   │   └── NotificationBell.jsx
+│   │   │   │
+│   │   │   ├── Leads/
+│   │   │   │   ├── LeadList.jsx
+│   │   │   │   ├── LeadCard.jsx
+│   │   │   │   ├── KanbanBoard.jsx
+│   │   │   │   ├── SplitView.jsx
+│   │   │   │   ├── LeadDetail.jsx
+│   │   │   │   └── ReplyEditor.jsx
+│   │   │   │
+│   │   │   ├── Filters/
+│   │   │   │   └── SearchFilterBar.jsx
+│   │   │   │
+│   │   │   └── Settings/
+│   │   │       ├── BudgetRanges.jsx
+│   │   │       ├── RateLimits.jsx
+│   │   │       ├── KeywordRules.jsx
+│   │   │       ├── ModelSelector.jsx
+│   │   │       └── ResumeUploader.jsx
+│   │   │
+│   │   ├── hooks/
+│   │   │   ├── useAuth.js
+│   │   │   ├── useLeads.js
+│   │   │   └── useNotifications.js
+│   │   │
+│   │   ├── services/
+│   │   │   ├── api.js          # Axios configured
+│   │   │   └── websocket.js    # Real-time notifications (optional)
+│   │   │
+│   │   └── utils/
+│   │       ├── rankColors.js
+│   │       └── formatCurrency.js
+│   │
+│   ├── package.json
+│   ├── tailwind.config.js
+│   └── vite.config.js          # Fast dev server
+│
+├── Devaxio.db                  # SQLite database file
+├── requirements.txt            # Python dependencies
+├── .env                        # Environment variables (API keys, secrets)
+├── run.py                      # Script to start both backend + frontend
+└── CONCEPT.txt                 # This file
+
+================================================================================
+ENVIRONMENT VARIABLES (.env)
+================================================================================
+
+# Auth
+SECRET_KEY=your-secret-key-here
+
+# OAuth (Google/GitHub)
+GOOGLE_CLIENT_ID=xxx
+GOOGLE_CLIENT_SECRET=xxx
+GITHUB_CLIENT_ID=xxx
+GITHUB_CLIENT_SECRET=xxx
+
+# Email (Gmail SMTP)
+GMAIL_EMAIL=your-email@gmail.com
+GMAIL_APP_PASSWORD=xxxx  # Generate from Google Account > App Passwords
+
+# AI Providers
+OPENROUTER_API_KEY=xxx
+GITHUB_MODELS_TOKEN=xxx  # GitHub personal access token
+
+# Reddit API (free)
+REDDIT_CLIENT_ID=xxx
+REDDIT_CLIENT_SECRET=xxx
+REDDIT_USER_AGENT=DevaxioLEADFinder/1.0
+
+# Mastodon (optional, public instance works without auth)
+MASTODON_ACCESS_TOKEN=xxx  # Only if using authenticated calls
+
+================================================================================
+FIRST LAUNCH STEPS (USER PERSPECTIVE)
+================================================================================
+
+1. Clone repository / download files
+2. Create virtual environment: python -m venv venv
+3. Install backend: pip install -r requirements.txt
+4. Install frontend: cd frontend && npm install
+5. Copy .env.example to .env and fill in API keys
+6. Run: python run.py
+7. Open browser to http://localhost:8000
+8. Create admin account (email/password)
+9. Upload resume (AI parses automatically)
+10. Configure budget ranges and rate limits (optional, defaults exist)
+11. Start finding leads!
+
+================================================================================
+FUTURE SCALING OPTIONS (IF BUDGET ALLOWS)
+================================================================================
+
+- Replace SQLite with PostgreSQL (Supabase free tier)
+- Deploy to Oracle Cloud free tier (24GB RAM VM)
+- Add Twitter API ($100/month for Basic tier)
+- Add Telegram bot notifications (free)
+- Add custom domain + SSL (Cloudflare free)
+- Add Stripe integration for selling this tool to other devs
+
+================================================================================
+END OF CONCEPT
+================================================================================

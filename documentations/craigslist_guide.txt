@@ -1,0 +1,1150 @@
+================================================================================
+                    python-craigslist: COMPLETE GUIDE FOR INTEGRATION
+                            (Library version 1.1.4 – Apr 11, 2021)
+================================================================================
+
+This guide combines the official PyPI documentation and the worldwide Craigslist
+sites list. You will learn how to set up the scraper, find correct site/area
+parameters, use filters, and write code snippets for common use cases.
+
+IMPORTANT DISCLAIMER (from the library authors)
+------------------------------------------------
+- The author does not work for or have any affiliation with Craigslist.
+- This module was implemented for EDUCATIONAL PURPOSES.
+- It should NOT be used for crawling or downloading data from Craigslist in
+  violation of their Terms of Service. Always respect robots.txt and use
+  reasonable delays (e.g., time.sleep(1)) between requests.
+
+================================================================================
+1. INSTALLATION
+================================================================================
+
+pip install python-craigslist
+
+Verify installation:
+>>> import craigslist
+>>> print(craigslist.__version__)   # 1.1.4
+first , you install it seperately in a window , then add this library to requirements.txt for future users.
+
+================================================================================
+2. MAIN CLASSES & SUBCLASSES
+================================================================================
+
+All subclasses inherit from CraigslistBase.
+
+| Subclass               | Description                          |
+|------------------------|--------------------------------------|
+| CraigslistCommunity    | craigslist.org > community           |
+| CraigslistHousing      | craigslist.org > housing             |
+| CraigslistJobs         | craigslist.org > jobs                |
+| CraigslistForSale      | craigslist.org > for sale            |
+| CraigslistEvents       | craigslist.org > event calendar      |
+| CraigslistServices     | craigslist.org > services            |
+| CraigslistGigs         | craigslist.org > gigs                |
+| CraigslistResumes      | craigslist.org > resumes             |
+
+================================================================================
+3. HOW TO FIND THE CORRECT `site` AND `area` PARAMETERS
+================================================================================
+
+Step 1 – site:
+- Go to https://www.craigslist.org/about/sites
+- This is the site names listed on that website:
+auburn
+birmingham
+dothan
+florence
+muscle shoals
+gadsden-anniston
+huntsville
+decatur
+mobile
+montgomery
+tuscaloosa
+bloomington-normal
+champaign urbana
+chicago
+decatur
+la salle co
+mattoon-charleston
+peoria
+rockford
+southern illinois
+springfield
+western IL
+billings
+bozeman
+butte
+great falls
+helena
+kalispell
+missoula
+eastern montana
+rhode island
+charleston
+columbia
+florence
+greenville
+hilton head
+myrtle beach
+anchorage
+mat-su
+fairbanks
+kenai peninsula
+southeast alaska
+bloomington
+evansville
+fort wayne
+indianapolis
+kokomo
+lafayette
+west lafayette
+grand island
+lincoln
+north platte
+omaha
+council bluffs
+scottsbluff
+panhandle
+south dakota
+flagstaff
+sedona
+mohave county
+phoenix
+prescott
+show low
+sierra vista
+tucson
+yuma
+muncie
+anderson
+richmond
+south bend
+michiana
+terre haute
+ames
+cedar rapids
+des moines
+dubuque
+fort dodge
+iowa city
+mason city
+quad cities
+sioux city
+southeast IA
+waterloo
+cedar falls
+elko
+las vegas
+reno
+tahoe
+new hampshire
+central NJ
+jersey shore
+north jersey
+south jersey
+albuquerque
+clovis
+portales
+farmington
+las cruces
+roswell
+carlsbad
+santa fe
+taos
+albany
+binghamton
+buffalo
+catskills
+chautauqua
+elmira
+corning
+finger lakes
+glens falls
+hudson valley
+ithaca
+long island
+new york city
+oneonta
+plattsburgh
+adirondacks
+potsdam
+canton
+massena
+rochester
+syracuse
+twin tiers
+utica
+rome
+oneida
+watertown
+chattanooga
+clarksville
+cookeville
+jackson
+knoxville
+memphis
+nashville
+tri-cities
+abilene
+amarillo
+austin
+beaumont
+port arthur
+brownsville
+college station
+corpus christi
+dallas
+fort worth
+deep east texas
+del rio
+eagle pass
+el paso
+galveston
+houston
+killeen
+temple
+ft hood
+laredo
+lubbock
+mcallen
+edinburg
+odessa
+midland
+san angelo
+san antonio
+san marcos
+southwest TX
+texoma
+tyler
+east TX
+victoria
+waco
+wichita falls
+logan
+ogden
+clearfield
+provo
+orem
+salt lake city
+st george
+fayetteville
+fort smith
+jonesboro
+little rock
+texarkana
+bakersfield
+chico
+fresno
+madera
+gold country
+hanford
+corcoran
+humboldt county
+imperial county
+inland empire
+los angeles
+mendocino county
+merced
+modesto
+monterey bay
+orange county
+palm springs
+redding
+sacramento
+san diego
+san francisco bay area
+san luis obispo
+santa barbara
+santa maria
+siskiyou county
+stockton
+susanville
+ventura county
+visalia
+tulare
+yuba
+sutter
+boulder
+colorado springs
+denver
+eastern CO
+fort collins
+north CO
+high rockies
+pueblo
+western slope
+eastern CT
+hartford
+new haven
+northwest CT
+lawrence
+manhattan
+northwest KS
+salina
+southeast KS
+southwest KS
+topeka
+wichita
+bowling green
+eastern kentucky
+lexington
+louisville
+owensboro
+western KY
+baton rouge
+central louisiana
+houma
+lafayette
+lake charles
+monroe
+new orleans
+shreveport
+maine
+annapolis
+baltimore
+eastern shore
+frederick
+southern maryland
+western maryland
+boston
+cape cod
+islands
+south coast
+western massachusetts
+worcester
+central MA
+asheville
+boone
+charlotte
+eastern NC
+fayetteville
+greensboro
+hickory
+lenoir
+jacksonville
+outer banks
+raleigh
+durham
+chapel hill
+wilmington
+winston-salem
+bismarck
+fargo
+moorhead
+grand forks
+north dakota
+vermont
+charlottesville
+danville
+fredericksburg
+hampton roads
+harrisonburg
+lynchburg
+new river valley
+richmond
+roanoke
+southwest VA
+delaware
+washington DC
+broward county
+daytona beach
+florida keys
+fort lauderdale
+ft myers
+SW florida
+gainesville
+heartland florida
+jacksonville
+lakeland
+miami
+dade
+north central FL
+ocala
+okaloosa
+walton
+orlando
+panama city
+pensacola
+sarasota
+bradenton
+south florida
+space coast
+st augustine
+tallahassee
+tampa bay area
+treasure coast
+palm beach county
+albany
+athens
+atlanta
+augusta
+brunswick
+columbus
+macon
+warner robins
+northwest GA
+savannah
+hinesville
+statesboro
+valdosta
+hawaii
+boise
+east idaho
+lewiston
+clarkston
+twin falls
+ann arbor
+battle creek
+central michigan
+detroit metro
+flint
+grand rapids
+holland
+jackson
+kalamazoo
+lansing
+monroe
+muskegon
+northern michigan
+port huron
+saginaw
+midland
+bay city
+southwest michigan
+the thumb
+upper peninsula
+bemidji
+brainerd
+duluth
+superior
+mankato
+minneapolis
+st paul
+rochester
+southwest MN
+st cloud
+gulfport
+biloxi
+hattiesburg
+jackson
+meridian
+north mississippi
+southwest MS
+columbia
+jeff city
+joplin
+kansas city
+kirksville
+lake of the ozarks
+southeast missouri
+springfield
+st joseph
+st louis
+akron
+canton
+ashtabula
+athens
+chillicothe
+cincinnati
+cleveland
+columbus
+dayton
+springfield
+lima
+findlay
+mansfield
+sandusky
+toledo
+tuscarawas co
+youngstown
+zanesville
+cambridge
+lawton
+northwest OK
+oklahoma city
+stillwater
+tulsa
+bend
+corvallis
+albany
+east oregon
+eugene
+klamath falls
+medford
+ashland
+oregon coast
+portland
+roseburg
+salem
+altoona
+johnstown
+cumberland valley
+erie
+harrisburg
+lancaster
+lehigh valley
+meadville
+philadelphia
+pittsburgh
+poconos
+reading
+scranton
+wilkes-barre
+state college
+williamsburg
+york
+winchester
+bellingham
+kennewick
+pasco
+richland
+moses lake
+olympic peninsula
+pullman
+moscow
+seattle
+tacoma
+skagit
+island
+sji
+spokane
+coeur d'alene
+wenatchee
+yakima
+charleston
+eastern panhandle
+huntington
+ashland
+morgantown
+northern panhandle
+parkersburg
+marietta
+southern WV
+west virginia
+appleton
+oshkosh
+fdl
+eau claire
+green bay
+janesville
+kenosha
+racine
+la crosse
+madison
+milwaukee
+northern WI
+sheboygan
+wausau
+wyoming
+guam
+micronesia
+puerto rico
+us virgin islands
+calgary
+edmonton
+ft mcmurray
+lethbridge
+medicine hat
+peace river country
+red deer
+cariboo
+comox valley
+fraser valley
+kamloops
+kelowna
+okanagan
+kootenays
+nanaimo
+prince george
+skeena
+bulkley
+sunshine coast
+vancouver
+victoria
+whistler
+winnipeg
+new brunswick
+st john's
+northwest territories
+yellowknife
+halifax
+barrie
+belleville
+brantford
+woodstock
+chatham
+kent
+cornwall
+guelph
+hamilton
+burlington
+kingston
+kitchener
+waterloo
+cambridge
+london
+niagara region
+ottawa
+hull
+gatineau
+owen sound
+peterborough
+sarnia
+sault ste marie
+sudbury
+thunder bay
+toronto
+windsor
+prince edward island
+montreal
+quebec city
+saguenay
+sherbrooke
+trois-rivieres
+regina
+saskatoon
+whitehorse
+vienna
+belgium
+bulgaria
+croatia
+prague
+copenhagen
+finland
+paris
+bordeaux
+brittany
+grenoble
+lille
+loire valley
+lyon
+marseille
+montpellier
+nice
+cote d'azur
+normandy
+strasbourg
+toulouse
+berlin
+bremen
+cologne
+dresden
+dusseldorf
+essen
+ruhr
+frankfurt
+hamburg
+hannover
+heidelberg
+kaiserslautern
+leipzig
+munich
+nuremberg
+stuttgart
+greece
+budapest
+reykjavik
+dublin
+luxembourg
+amsterdam
+randstad
+norway
+poland
+faro
+algarve
+lisbon
+porto
+romania
+moscow
+st petersburg
+sweden
+basel
+bern
+geneva
+lausanne
+zurich
+turkey
+ukraine
+aberdeen
+bath
+belfast
+birmingham
+west midlands
+brighton
+bristol
+cambridge
+cardiff
+wales
+coventry
+derby
+devon
+cornwall
+dundee
+east anglia
+east midlands
+edinburgh
+essex
+glasgow
+hampshire
+kent
+leeds
+liverpool
+london
+manchester
+newcastle
+northeast england
+nottingham
+oxford
+sheffield
+bangladesh
+beijing
+chengdu
+chongqing
+dalian
+guangzhou
+hangzhou
+nanjing
+shanghai
+shenyang
+shenzhen
+wuhan
+xian
+guam-micronesia
+hong kong
+ahmedabad
+bangalore
+bhubaneswar
+chandigarh
+chennai
+madras
+delhi
+goa
+hyderabad
+indore
+jaipur
+kerala
+kolkata
+calcutta
+lucknow
+mumbai
+pune
+surat
+indonesia
+iran
+iraq
+haifa
+jerusalem
+tel aviv
+west bank
+fukuoka
+hiroshima
+nagoya
+okinawa
+osaka
+kobe
+kyoto
+sapporo
+sendai
+tokyo
+seoul
+kuwait
+beirut
+malaysia
+pakistan
+bacolod
+bicol region
+cagayan de oro
+cebu
+davao city
+iloilo
+manila
+pampanga
+zamboanga
+singapore
+taiwan
+thailand
+united arab emirates
+vietnam
+adelaide
+brisbane
+cairns
+canberra
+darwin
+gold coast
+melbourne
+newcastle
+perth
+sydney
+tasmania
+wollongong
+auckland
+christchurch
+dunedin
+wellington
+buenos aires
+chile
+guatemala
+panama
+bolivia
+colombia
+acapulco
+baja california sur
+chihuahua
+ciudad juarez
+guadalajara
+guanajuato
+hermosillo
+mazatlan
+mexico city
+monterrey
+oaxaca
+puebla
+puerto vallarta
+tijuana
+veracruz
+yucatan
+peru
+belo horizonte
+brasilia
+curitiba
+fortaleza
+porto alegre
+recife
+rio de janeiro
+salvador
+sao paulo
+costa rica
+caribbean islands
+dominican republic
+montevideo
+ecuador
+venezuela
+el salvador
+nicaragua
+virgin islands
+egypt
+ghana
+morocco
+tunisia
+ethiopia
+kenya
+cape town
+durban
+johannesburg
+pretoria
+
+Step 2 – area (optional, only if the site has areas):
+- On the chosen site's front page, look at the top‑center for links like:
+    "new york city   mnh   brk   que   brx   stn   jsy   lgi   wch   fct"
+- Click the area you want, the URL becomes: sfbay.craigslist.org/**sfc**
+- The value after the slash ('sfc') is the `area` parameter.
+- If no area links exist, leave `area` unset or set to None.
+
+Examples of real sites from the worldwide list (see section 8 for full list):
+
+- US: 'sfbay' (San Francisco Bay Area), 'newyork', 'chicago', 'seattle', 'austin'
+- Canada: 'toronto', 'vancouver', 'montreal'
+- UK: 'london', 'manchester', 'edinburgh'
+- Germany: 'berlin', 'munich', 'hamburg'
+- Australia: 'sydney', 'melbourne', 'brisbane'
+- France: 'paris', 'lyon', 'marseille'
+
+================================================================================
+4. HOW TO FIND CATEGORY FILTERS
+================================================================================
+
+Each subclass supports specific filters. You can get a full list for a subclass
+using the .show_categories() class method.
+
+Example for Services:
+>>> from craigslist import CraigslistServices
+>>> CraigslistServices.show_categories()
+
+Output:
+CraigslistServices categories:
+* aos = automotive services
+* bts = beauty services
+* cms = cell phone / mobile services
+* cps = computer services
+* crs = creative services
+* cys = cycle services
+... (full list in the PDF)
+
+To use a category, pass the `category` parameter when initializing:
+cl = CraigslistHousing(site='sfbay', area='sfc', category='roo')   # 'roo' = rooms
+
+================================================================================
+5. AVAILABLE FILTERS FOR EACH SUBCLASS
+================================================================================
+
+General filters (apply to most subclasses):
+- `max_price` : integer
+- `min_price` : integer
+- `search_distance` : integer (miles)
+- `postal` : string (postal code for location‑based search)
+- `has_image` : boolean (True/False)
+- `auto_paint` : for vehicles (e.g., 'black', 'blue', 'brown', 'green')
+- `auto_size` : 'compact', 'full‑size', 'mid‑size'
+- `auto_title_status` : 'clean', 'salvage', 'rebuilt'
+- `auto_transmission` : 'manual', 'automatic', 'other'
+- `auto_bodytype` : 'bus', 'convertible', 'coupe', 'sedan', etc.
+
+Jobs‑specific filters:
+- `is_internship` : boolean
+- `telecommuting` : boolean
+- `contract` : boolean
+
+Housing‑specific filters:
+- `bedrooms` : integer (e.g., 1, 2, 3)
+- `bathrooms` : float (e.g., 1.5)
+- `housing_type` : 'apt', 'condo', 'house', 'duplex', etc.
+- `laundry` : 'w/d in unit', 'w/d hookups', 'no laundry'
+- `parking` : 'carport', 'detached', 'attached', 'off‑street'
+
+Events‑specific filters:
+- `free` : boolean (free food / free entry)
+
+================================================================================
+6. CODE SNIPPETS – REAL USE CASES
+================================================================================
+
+All examples below use actual site/area names from the official Craigslist list.
+
+-------------------------------------------------------------------------------
+6.1 HOUSING – Look for a room in San Francisco (maximum price $1200)
+-------------------------------------------------------------------------------
+from craigslist import CraigslistHousing
+
+cl_h = CraigslistHousing(
+    site='sfbay',
+    area='sfc',               # San Francisco city
+    filters={'max_price': 1200}
+)
+
+# Get approximate result count
+print(cl_h.get_results_approx_count())   # e.g., 992
+
+# Iterate over results (newest first, geotag included)
+for result in cl_h.get_results(sort_by='newest', geotag=True, limit=10):
+    print(result)
+
+# Sample output:
+# {
+#   'id': u'4851150747',
+#   'name': u'Near SFSU, UCSF and NEWLY FURNISHED - CL...',
+#   'url': u'http://sfbay.craigslist.org/sfc/roo/4851150747.html',
+#   'datetime': u'2015-01-27 23:44',
+#   'price': u'$1100',
+#   'where': u'inner sunset / UCSF',
+#   'has_image': False,
+#   'has_map': True,
+#   'geotag': (37.738473, -122.494721)
+# }
+
+-------------------------------------------------------------------------------
+6.2 JOBS – Software engineering internship in Silicon Valley (Palo Alto area)
+-------------------------------------------------------------------------------
+from craigslist import CraigslistJobs
+
+cl_j = CraigslistJobs(
+    site='sfbay',
+    area='sby',               # 'sby' = Silicon Valley (Santa Clara, Sunnyvale, etc.)
+    filters={'is_internship': True}
+)
+
+for result in cl_j.get_results(limit=20):
+    print(result)
+
+# Sample output:
+# {
+#   'id': u'5708651182',
+#   'name': u'GAME DEVELOPER INTERNSHIP AT TYNKER - AV...',
+#   'url': u'http://sfbay.craigslist.org/pen/eng/5708651182.html',
+#   'datetime': u'2016-07-30 13:30',
+#   'price': None,
+#   'where': u'mountain view',
+#   'has_image': True,
+#   'has_map': True,
+#   'geotag': None
+# }
+
+-------------------------------------------------------------------------------
+6.3 EVENTS – Free food events in New York City (Manhattan area)
+-------------------------------------------------------------------------------
+from craigslist import CraigslistEvents
+
+cl_e = CraigslistEvents(
+    site='newyork',
+    area='mnh',               # Manhattan
+    filters={'free': True}    # events with free food
+)
+
+for result in cl_e.get_results(sort_by='newest', limit=30):
+    print(result)
+
+# Sample output:
+# {
+#   'id': u'486617824',
+#   'name': u'Lituation Thursdays @ Le Reve',
+#   'url': u'http://newyork.craigslist.org/mnh/eve/486617824.html',
+#   'datetime': u'1/29',
+#   'price': None,
+#   'where': u'Midtown East',
+#   'has_image': True,
+#   'has_map': True,
+#   'geotag': None
+# }
+
+-------------------------------------------------------------------------------
+6.4 FOR SALE – Search for a used bicycle under $200 in Chicago
+-------------------------------------------------------------------------------
+from craigslist import CraigslistForSale
+
+cl_fs = CraigslistForSale(
+    site='chicago',
+    filters={
+        'max_price': 200,
+        'query': 'bicycle'
+    }
+)
+
+for result in cl_fs.get_results(limit=50):
+    print(result['name'], result['price'], result['url'])
+
+-------------------------------------------------------------------------------
+6.5 SERVICES – Find computer repair services in Toronto
+-------------------------------------------------------------------------------
+from craigslist import CraigslistServices
+
+cl_serv = CraigslistServices(
+    site='toronto',
+    category='cps'            # computer services
+)
+
+for result in cl_serv.get_results():
+    print(f"{result['name']} – {result['where']} – {result['url']}")
+
+================================================================================
+7. API REFERENCE – METHODS & PARAMETERS
+================================================================================
+
+Constructor for any subclass:
+    ClassName(site, area=None, category=None, filters=None)
+
+Parameters:
+    site (str)      : required, e.g., 'sfbay', 'newyork', 'london'
+    area (str)      : optional, e.g., 'sfc', 'mnh', 'sby'
+    category (str)  : optional, e.g., 'roo', 'cps', 'eng' (engineering jobs)
+    filters (dict)  : optional, keys as described in section 5
+
+Methods:
+    1. .get_results(sort_by=None, limit=None, geotag=False)
+        - sort_by : 'newest' or None (default ordering)
+        - limit   : integer, maximum number of results (Craigslist caps at 3000)
+        - geotag  : boolean, if True adds (lat, lng) tuple to each result
+        Returns a generator that yields result dicts.
+
+    2. .get_results_approx_count()
+        - Returns an approximate number of total results for the query.
+
+    3. .show_categories() – class method, prints all categories for the subclass.
+
+Result dictionary keys:
+    - id         : string (posting ID)
+    - name       : string (title)
+    - url        : string (full URL)
+    - datetime   : string (posting time, format varies)
+    - price      : string or None
+    - where      : string (location text)
+    - has_image  : bool
+    - has_map    : bool
+    - geotag     : (float, float) tuple or None
+
+================================================================================
+8. LIST OF REAL `site` NAMES (EXTRACTED FROM OFFICIAL SITES PDF)
+================================================================================
+
+Use the values exactly as shown below. For areas, refer to the two‑letter codes
+on each regional site (e.g., for New York: 'mnh', 'brk', 'que', 'brx', 'stn',
+'jsy', 'lgi', 'wch', 'fct').
+
+UNITED STATES (major examples):
+   'sfbay', 'losangeles', 'sandiego', 'sacramento', 'orangecounty', 'phoenix',
+   'tucson', 'denver', 'boulder', 'hartford', 'newhaven', 'washingtondc',
+   'miami', 'orlando', 'tampa', 'atlanta', 'chicago', 'indianapolis', 'boston',
+   'detroit', 'minneapolis', 'stlouis', 'lasvegas', 'newjersey', 'newyork',
+   'buffalo', 'charlotte', 'raleigh', 'columbus', 'cincinnati', 'cleveland',
+   'portland', 'philadelphia', 'pittsburgh', 'nashville', 'austin', 'dallas',
+   'houston', 'saltlakecity', 'seattle', 'milwaukee'
+
+CANADA:
+   'calgary', 'edmonton', 'vancouver', 'winnipeg', 'halifax', 'toronto',
+   'ottawa', 'montreal', 'regina', 'saskatoon', 'whitehorse'
+
+EUROPE:
+   'vienna', 'brussels', 'prague', 'copenhagen', 'helsinki', 'paris', 'berlin',
+   'munich', 'hamburg', 'cologne', 'frankfurt', 'athens', 'budapest', 'dublin',
+   'milan', 'rome', 'amsterdam', 'oslo', 'warsaw', 'lisbon', 'moscow',
+   'barcelona', 'madrid', 'stockholm', 'geneva', 'london', 'manchester'
+
+ASIA / PACIFIC:
+   'beijing', 'shanghai', 'tokyo', 'osaka', 'seoul', 'manila', 'singapore',
+   'taiwan', 'bangkok', 'dubai', 'mumbai', 'delhi', 'bangalore'
+
+OCEANIA:
+   'sydney', 'melbourne', 'brisbane', 'perth', 'adelaide', 'auckland'
+
+LATIN AMERICA:
+   'buenosaires', 'santiago', 'lima', 'mexicocity', 'saopaulo', 'riodejaneiro'
+
+AFRICA:
+   'cairo', 'casablanca', 'johannesburg', 'capetown', 'nairobi'
+
+================================================================================
+9. IMPORTANT LIMITATIONS & BEST PRACTICES FOR YOUR APP
+================================================================================
+
+- **Result cap**: Craigslist never returns more than 3000 results per query.
+- **No official API**: This library scrapes the HTML. It may break if Craigslist
+  changes its markup.
+- **Rate limiting**: Do NOT send requests too quickly. Add delays between calls:
+    import time
+    time.sleep(1)   # minimum 1 second between requests
+- **Ethical use**: Follow Craigslist's Terms of Use. Consider caching results
+  to avoid unnecessary repeated scraping.
+- **Error handling**: Always wrap requests in try/except blocks. Network issues
+  or CAPTCHA pages may occur.
+- **User‑Agent**: The library uses a default User‑Agent. For production,
+  consider rotating User‑Agents to reduce fingerprinting.
+
+Example robust integration snippet:
+------------------------------------------------
+from craigslist import CraigslistHousing
+import time
+
+def safe_scrape(site, area, filters, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            cl = CraigslistHousing(site=site, area=area, filters=filters)
+            results = list(cl.get_results(limit=50, geotag=True))
+            time.sleep(1.5)
+            return results
+        except Exception as e:
+            print(f"Attempt {attempt+1} failed: {e}")
+            time.sleep(5)
+    return []
+------------------------------------------------
+
+================================================================================
+10. TROUBLESHOOTING & SUPPORT
+================================================================================
+
+- The library's issue tracker: https://github.com/juliolm/ python-craigslist/issues
+- If categories do not return results, verify the site/area with a browser.
+- Some areas may be deprecated – check current Craigslist site map.
+- The `get_results_approx_count()` may return 0 if no filters match.
+
+================================================================================
+END OF GUIDE
+================================================================================

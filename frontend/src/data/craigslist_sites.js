@@ -1,0 +1,102 @@
+export const CRAIGSLIST_SITES = {
+  "UNITED STATES": [
+    "auburn", "birmingham", "dothan", "florence / muscle shoals", "gadsden-anniston", "huntsville / decatur", "mobile", "montgomery", "tuscaloosa", "bloomington-normal", "champaign urbana", "chicago", "decatur", "la salle co", "mattoon-charleston", "peoria", "rockford", "southern illinois", "springfield", "western IL", "billings", "bozeman", "butte", "great falls", "helena", "kalispell", "missoula", "eastern montana", "rhode island", "charleston", "columbia", "florence", "greenville / upstate", "hilton head", "myrtle beach", "anchorage / mat-su", "fairbanks", "kenai peninsula", "southeast alaska", "bloomington", "evansville", "fort wayne", "indianapolis", "kokomo", "lafayette / west lafayette", "muncie / anderson", "richmond", "south bend / michiana", "terre haute", "ames", "cedar rapids", "des moines", "dubuque", "fort dodge", "iowa city", "mason city", "quad cities", "sioux city", "southeast IA", "waterloo / cedar falls", "elko", "las vegas", "reno / tahoe", "new hampshire", "central NJ", "jersey shore", "north jersey", "south jersey", "albuquerque", "clovis / portales", "farmington", "las cruces", "roswell / carlsbad", "santa fe / taos", "albany", "binghamton", "buffalo", "catskills", "chautauqua", "elmira-corning", "finger lakes", "glens falls", "hudson valley", "ithaca", "long island", "new york city", "oneonta", "plattsburgh-adirondacks", "potsdam-canton-massena", "rochester", "syracuse", "twin tiers NY/PA", "utica-rome-oneida", "watertown", "chattanooga", "clarksville", "cookeville", "jackson", "knoxville", "memphis", "nashville", "tri-cities", "abilene", "amarillo", "austin", "beaumont / port arthur", "brownsville", "college station", "corpus christi", "dallas / fort worth", "deep east texas", "del rio / eagle pass", "el paso", "galveston", "houston", "killeen / temple / ft hood", "laredo", "lubbock", "mcallen / edinburg", "odessa / midland", "san angelo", "san antonio", "san marcos", "southwest TX", "texoma", "tyler / east TX", "victoria", "waco", "wichita falls", "logan", "ogden-clearfield", "provo / orem", "salt lake city", "st george", "fayetteville", "fort smith", "jonesboro", "little rock", "texarkana", "bakersfield", "chico", "fresno / madera", "gold country", "hanford-corcoran", "humboldt county", "imperial county", "inland empire", "los angeles", "mendocino county", "merced", "modesto", "monterey bay", "orange county", "palm springs", "redding", "sacramento", "san diego", "san francisco bay area", "san luis obispo", "santa barbara", "santa maria", "siskiyou county", "stockton", "susanville", "ventura county", "visalia-tulare", "yuba-sutter", "boulder", "colorado springs", "denver", "eastern CO", "fort collins / north CO", "high rockies", "pueblo", "western slope", "eastern CT", "hartford", "new haven", "northwest CT", "lawrence", "manhattan", "northwest KS", "salina", "southeast KS", "southwest KS", "topeka", "wichita", "bowling green", "eastern kentucky", "lexington", "louisville", "owensboro", "western KY", "baton rouge", "central louisiana", "houma", "lafayette", "lake charles", "monroe", "new orleans", "shreveport", "maine", "annapolis", "baltimore", "eastern shore", "frederick", "southern maryland", "western maryland", "boston", "cape cod / islands", "south coast", "western massachusetts", "worcester / central MA", "asheville", "boone", "charlotte", "eastern NC", "fayetteville", "greensboro", "hickory / lenoir", "jacksonville", "outer banks", "raleigh / durham / chapel hill", "wilmington", "winston-salem", "bismarck", "fargo / moorhead", "grand forks", "north dakota", "vermont", "charlottesville", "danville", "fredericksburg", "hampton roads", "harrisonburg", "lynchburg", "new river valley", "richmond", "roanoke", "southwest VA", "winchester", "delaware", "washington DC", "broward county", "daytona beach", "florida keys", "fort lauderdale", "ft myers / SW florida", "gainesville", "heartland florida", "jacksonville", "lakeland", "miami / dade", "north central FL", "ocala", "okaloosa / walton", "orlando", "panama city", "pensacola", "sarasota-bradenton", "south florida", "space coast", "st augustine", "tallahassee", "tampa bay area", "treasure coast", "palm beach county", "albany", "athens", "atlanta", "augusta", "brunswick", "columbus", "macon / warner robins", "northwest GA", "savannah / hinesville", "statesboro", "valdosta", "hawaii", "boise", "east idaho", "lewiston / clarkston", "twin falls", "ann arbor", "battle creek", "central michigan", "detroit metro", "flint", "grand rapids", "holland", "jackson", "kalamazoo", "lansing", "monroe", "muskegon", "northern michigan", "port huron", "saginaw-midland-bay city", "southwest michigan", "the thumb", "upper peninsula", "bemidji", "brainerd", "duluth / superior", "mankato", "minneapolis / st paul", "rochester", "southwest MN", "st cloud", "gulfport / biloxi", "hattiesburg", "jackson", "meridian", "north mississippi", "southwest MS", "columbia / jeff city", "joplin", "kansas city", "kirksville", "lake of the ozarks", "southeast missouri", "springfield", "st joseph", "st louis", "akron / canton", "ashtabula", "athens", "chillicothe", "cincinnati", "cleveland", "columbus", "dayton / springfield", "lima / findlay", "mansfield", "sandusky", "toledo", "tuscarawas co", "youngstown", "zanesville / cambridge", "lawton", "northwest OK", "oklahoma city", "stillwater", "tulsa", "bend", "corvallis/albany", "east oregon", "eugene", "klamath falls", "medford-ashland", "oregon coast", "portland", "roseburg", "salem", "altoona-johnstown", "cumberland valley", "erie", "harrisburg", "lancaster", "lehigh valley", "meadville", "philadelphia", "pittsburgh", "poconos", "reading", "schaden / wilkes-barre", "state college", "williamsport", "york", "bellingham", "kenwick-pasco-richland", "moses lake", "olympic peninsula", "pullman / moscow", "seattle-tacoma", "skagit / island / SJI", "spokane / coeur d'alene", "wenatchee", "yakima", "charleston", "eastern panhandle", "huntington-ashland", "morgantown", "northern panhandle", "parkersburg-marietta", "southern WV", "west virginia (old)", "appleton-oshkosh-FDL", "eau claire", "green bay", "janesville", "kenosha-racine", "la crosse", "madison", "milwaukee", "northern WI", "sheboygan", "wausau", "wyoming", "guam-micronesia", "puerto rico", "u.s. virgin islands"
+  ],
+  "CANADA": [
+    "calgary", "edmonton", "ft mcmurray", "lethbridge", "medicine hat", "peace river country", "red deer", "cariboo", "comox valley", "fraser valley", "kamloops", "kelowna / okanagan", "kootenays", "nanaimo", "prince george", "skeena-bulkley", "sunshine coast", "vancouver", "victoria", "whistler", "winnipeg", "new brunswick", "st john's", "northwest territories", "yellowknife", "halifax", "barrie", "belleville", "brantford-woodstock", "chatham-kent", "cornwall", "guelph", "hamilton-burlington", "kingston", "kitchener-waterloo-cambridge", "london", "niagara region", "ottawa-hull-gatineau", "owen sound", "peterborough", "sarnia", "sault ste marie", "sudbury", "thunder bay", "toronto", "windsor", "prince edward island", "montreal", "quebec city", "saguenay", "sherbrooke", "trois-rivieres", "regina", "saskatoon", "whitehorse"
+  ],
+  "AUSTRIA": ["vienna"],
+  "BELGIUM": ["belgium"],
+  "BULGARIA": ["bulgaria"],
+  "CROATIA": ["croatia"],
+  "CZECH REPUBLIC": ["prague"],
+  "DENMARK": ["copenhagen"],
+  "FINLAND": ["finland"],
+  "FRANCE": [
+    "paris", "bordeaux", "brittany", "grenoble", "lille", "loire valley", "lyon", "marseille", "montpellier", "nice / cote d'azur", "normandy", "strasbourg", "toulouse"
+  ],
+  "GERMANY": [
+    "berlin", "bremen", "cologne", "dresden", "dusseldorf", "essen / ruhr", "frankfurt", "hamburg", "hannover", "heidelberg", "kaiserslautern", "leipzig", "munich", "nuremberg", "stuttgart"
+  ],
+  "GREECE": ["greece"],
+  "HUNGARY": ["budapest"],
+  "ICELAND": ["reykjavik"],
+  "IRELAND": ["dublin"],
+  "LUXEMBOURG": ["luxembourg"],
+  "NETHERLANDS": ["amsterdam / randstad"],
+  "NORWAY": ["norway"],
+  "POLAND": ["poland"],
+  "PORTUGAL": ["faro / algarve", "lisbon", "porto"],
+  "ROMANIA": ["romania"],
+  "RUSSIAN FEDERATION": ["moscow", "st petersburg"],
+  "SWEDEN": ["sweden"],
+  "SWITZERLAND": ["basel", "bern", "geneva", "lausanne", "zurich"],
+  "TURKEY": ["turkey"],
+  "UKRAINE": ["ukraine"],
+  "UNITED KINGDOM": [
+    "aberdeen", "bath", "belfast", "birmingham / west midlands", "brighton", "bristol", "cambridge", "cardiff / wales", "coventry", "derby", "devon & cornwall", "dundee", "east anglia", "east midlands", "edinburgh", "essex", "glasgow", "hampshire", "kent", "leeds", "liverpool", "london", "manchester", "newcastle / northeast england", "nottingham", "oxford", "sheffield"
+  ],
+  "BANGLADESH": ["bangladesh"],
+  "CHINA": [
+    "beijing", "chengdu", "chongqing", "dalian", "guangzhou", "hangzhou", "nanjing", "shanghai", "shenyang", "shenzhen", "wuhan", "xian"
+  ],
+  "GUAM / MICRONESIA": ["guam-micronesia"],
+  "HONG KONG": ["hong kong"],
+  "INDIA": [
+    "ahmedabad", "bangalore", "bhubaneswar", "chandigarh", "chennai (madras)", "delhi", "goa", "hyderabad", "indore", "jaipur", "kerala", "kolkata (calcutta)", "lucknow", "mumbai", "pune", "surat"
+  ],
+  "INDONESIA": ["indonesia"],
+  "IRAN": ["iran"],
+  "IRAQ": ["iraq"],
+  "ISRAEL AND PALESTINE": ["haifa", "jerusalem", "tel aviv", "west bank"],
+  "JAPAN": [
+    "fukuoka", "hiroshima", "nagoya", "okinawa", "osaka-kobe-kyoto", "sapporo", "sendai", "tokyo"
+  ],
+  "KOREA": ["seoul"],
+  "KUWAIT": ["kuwait"],
+  "LEBANON": ["beirut"],
+  "MALAYSIA": ["malaysia"],
+  "PAKISTAN": ["pakistan"],
+  "PHILIPPINES": [
+    "bacolod", "bicol region", "cagayan de oro", "cebu", "davao city", "iloilo", "manila", "pampanga", "zamboanga"
+  ],
+  "SINGAPORE": ["singapore"],
+  "TAIWAN": ["taiwan"],
+  "THAILAND": ["thailand"],
+  "UNITED ARAB EMIRATES": ["united arab emirates"],
+  "VIETNAM": ["vietnam"],
+  "AUSTRALIA": [
+    "adelaide", "brisbane", "cairns", "canberra", "darwin", "gold coast", "melbourne", "newcastle (NSW)", "perth", "sydney", "tasmania", "wollongong"
+  ],
+  "NEW ZEALAND": ["auckland", "christchurch", "dunedin", "wellington"],
+  "ARGENTINA": ["buenos aires"],
+  "CHILE": ["chile"],
+  "GUATEMALA": ["guatemala"],
+  "PANAMA": ["panama"],
+  "BOLIVIA": ["bolivia"],
+  "COLOMBIA": ["colombia"],
+  "MEXICO": [
+    "acapulco", "baja california sur", "chihuahua", "ciudad juarez", "guadalajara", "guanajuato", "hermosillo", "mazatlan", "mexico city", "monterrey", "oaxaca", "puebla", "puerto vallarta", "tijuana", "veracruz", "yucatan"
+  ],
+  "PERU": ["peru"],
+  "BRAZIL": [
+    "belo horizonte", "brasilia", "curitiba", "fortaleza", "porto alegre", "recife", "rio de janeiro", "salvador, bahia", "sao paulo"
+  ],
+  "COSTA RICA": ["costa rica"],
+  "PUERTO RICO": ["puerto rico"],
+  "CARIBBEAN ISLANDS": ["caribbean islands"],
+  "DOMINICAN REPUBLIC": ["dominican republic"],
+  "URUGUAY": ["montevideo"],
+  "ECUADOR": ["ecuador"],
+  "VENEZUELA": ["venezuela"],
+  "EL SALVADOR": ["el salvador"],
+  "NICARAGUA": ["nicaragua"],
+  "VIRGIN ISLANDS (U.S.)": ["virgin islands"],
+  "EGYPT": ["egypt"],
+  "GHANA": ["ghana"],
+  "MOROCCO": ["morocco"],
+  "TUNISIA": ["tunisia"],
+  "ETHIOPIA": ["ethiopia"],
+  "KENYA": ["kenya"],
+  "SOUTH AFRICA": ["cape town", "durban", "johannesburg", "pretoria"]
+};
