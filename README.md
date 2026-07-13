@@ -96,10 +96,13 @@ python3 --version && pip3 --version
 # 1. Install backend dependencies
 pip install -r requirements.txt
 
-# 2. Install frontend dependencies
+# 2. Install Playwright browser binaries (required for Lionbridge, Indeed, and LinkedIn scrapers)
+playwright install
+
+# 3. Install frontend dependencies
 cd frontend && npm install && cd ..
 
-# 3. Launch both servers
+# 4. Launch both servers
 python run.py
 ```
 
