@@ -14,7 +14,7 @@ def main():
     processes = []
     try:
         backend = subprocess.Popen(
-            [sys.executable, "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"],
+            [sys.executable, "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"],
             cwd=BACKEND_DIR,
             stderr=subprocess.PIPE,
         )
