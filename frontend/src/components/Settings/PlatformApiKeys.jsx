@@ -55,9 +55,9 @@ const GuideStep = ({ num, children }) => (
   </div>
 )
 
-function SectionCard({ icon, bg, label, children }) {
+function SectionCard({ icon, bg, label, tourId, children }) {
   return (
-    <div className="border-[3px] border-black bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+    <div className="border-[3px] border-black bg-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] overflow-hidden" data-tour={tourId}>
       <div className="flex items-center gap-3 px-5 py-4 bg-[#f5f0eb] border-b-[3px] border-black">
         <div className={`w-8 h-8 ${bg} border-[2px] border-black flex items-center justify-center shrink-0`}>
           <span className="text-white font-black text-xs">{icon}</span>
@@ -82,7 +82,7 @@ export default function PlatformApiKeys() {
 
       <div className="space-y-6">
         {/* Reddit */}
-        <SectionCard icon="R" bg="bg-[#FF4500]" label="Reddit Developer API">
+        <SectionCard icon="R" bg="bg-[#FF4500]" label="Reddit Developer API" tourId="settings-keys-reddit">
           <div className="flex items-center gap-2 mb-2">
             <HelpIcon title="Reddit 2026 API Setup">
               <GuideStep num="1">Log in to <a href="https://www.reddit.com/prefs/apps" target="_blank" className="text-orange-600 font-black underline">Reddit Apps Portal</a>.</GuideStep>
@@ -116,7 +116,7 @@ export default function PlatformApiKeys() {
         </SectionCard>
 
         {/* Gmail */}
-        <SectionCard icon="G" bg="bg-[#EA4335]" label="Gmail &amp; Google Alerts">
+        <SectionCard icon="G" bg="bg-[#EA4335]" label="Gmail &amp; Google Alerts" tourId="settings-gmail-smtp">
           <div className="flex items-center gap-2 mb-2">
             <HelpIcon title="Google Security 2026 Guide">
               <GuideStep num="1">Enable <strong>2-Step Verification</strong> in <a href="https://myaccount.google.com/security" target="_blank" className="text-orange-600 font-black underline">Google Security</a>.</GuideStep>

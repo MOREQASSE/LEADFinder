@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import { useOnboarding } from '../../hooks/useOnboarding'
 import NotificationBell from './NotificationBell'
 
 const QUOTES = [
@@ -72,6 +73,7 @@ function pickNextQuote() {
 
 export default function Header({ onMenuClick }) {
   const { user, logout } = useAuth()
+  const { showWelcome } = useOnboarding()
   const navigate = useNavigate()
   const [quoteIdx, setQuoteIdx] = useState(() => pickNextQuote())
   const [fading, setFading] = useState(false)
@@ -116,6 +118,14 @@ export default function Header({ onMenuClick }) {
       </div>
 
       <div className="flex items-center gap-4 shrink-0">
+        <button
+          onClick={showWelcome}
+          title="Replay guided tour"
+          aria-label="Replay guided tour"
+          className="w-9 h-9 bg-white border-[3px] border-black flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all text-gray-700 hover:text-orange-500"
+        >
+          <i className="fa-solid fa-circle-question text-sm"></i>
+        </button>
         <NotificationBell />
         <button onClick={() => navigate('/profile')} className="hidden sm:flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           <div className="w-7 h-7 bg-orange-500 border-[2px] border-black flex items-center justify-center">

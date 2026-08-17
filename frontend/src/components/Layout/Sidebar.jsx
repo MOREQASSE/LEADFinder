@@ -67,7 +67,7 @@ export default function Sidebar({ open, onToggle }) {
             Main
           </div>
         )}
-        <nav className={`space-y-1.5 ${mini ? 'px-0.5' : ''}`}>
+        <nav className={`space-y-1.5 ${mini ? 'px-0.5' : ''}`} data-tour="sidebar-nav">
           {links.slice(0, 4).map((link) => (
             <NavItem key={link.to} {...link} end={link.to === '/'} mini={mini} />
           ))}

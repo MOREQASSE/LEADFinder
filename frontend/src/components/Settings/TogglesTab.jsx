@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSettings } from '../../hooks/useSettings'
+import { useOnboarding } from '../../hooks/useOnboarding'
 
 const TOGGLES = [
   {
@@ -31,6 +32,7 @@ const TOGGLES = [
 
 export default function TogglesTab() {
   const { getValue, setValue } = useSettings()
+  const { showWelcome } = useOnboarding()
 
   return (
     <div className="space-y-4">
@@ -75,6 +77,30 @@ export default function TogglesTab() {
           </div>
         )
       })}
+
+      {/* Replay onboarding tour */}
+      <div className="bg-white border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+        <div className="h-2 bg-orange-500 border-b-[3px] border-black" />
+        <div className="p-5 flex items-start gap-4">
+          <div className="w-10 h-10 bg-orange-500 border-[3px] border-black flex items-center justify-center shrink-0">
+            <i className="fa-solid fa-route text-white"></i>
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-sm font-black uppercase tracking-wider text-gray-800">Onboarding Tour</h3>
+            <p className="text-xs text-gray-500 font-medium mt-1">
+              Replay the guided product tour — it walks you through the dashboard, lead discovery,
+              profile, and settings.
+            </p>
+          </div>
+          <button
+            onClick={showWelcome}
+            className="bg-orange-500 border-[3px] border-black text-white font-black text-xs uppercase tracking-wider px-4 py-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all flex items-center gap-2 shrink-0"
+          >
+            <i className="fa-solid fa-rotate-right text-xs"></i>
+            Replay Tour
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

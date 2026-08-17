@@ -241,7 +241,7 @@ export default function GetLeads() {
         <div className="lg:col-span-2 space-y-8">
 
           {/* Platform Selection */}
-          <div className="bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+          <div className="bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" data-tour="get-leads-platforms">
             <div className="px-6 py-4 border-b-[3px] border-black flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 bg-orange-500 rotate-45" />
@@ -284,7 +284,7 @@ export default function GetLeads() {
 
           {/* Launch Section */}
           {!loading && !results && (
-            <div className="bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative">
+            <div className="bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative" data-tour="get-leads-launch">
               <div className="px-8 py-10 text-center">
                 <div className="w-14 h-14 bg-orange-500 border-[3px] border-black flex items-center justify-center mx-auto mb-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                   <i className="fa-solid fa-rocket text-xl text-white"></i>

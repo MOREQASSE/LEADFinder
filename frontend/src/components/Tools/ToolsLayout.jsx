@@ -217,7 +217,7 @@ export default function ToolsLayout() {
                 <div className="absolute -bottom-0 left-0 right-0 h-[3px] bg-black mt-4" />
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-6" data-tour="tools-grid">
                 {categories.map(cat => {
                   const catTools = groupedTools[cat]
                   if (!catTools || catTools.length === 0) return null

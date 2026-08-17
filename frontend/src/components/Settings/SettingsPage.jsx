@@ -1,5 +1,5 @@
 import React from 'react'
-import { useBlocker } from 'react-router-dom'
+import { useBlocker, useSearchParams } from 'react-router-dom'
 import { SettingsProvider, useSettings } from '../../hooks/useSettings'
 import SearchPresets from './SearchPresets'
 import CountrySelector from './CountrySelector'
@@ -40,6 +40,12 @@ function SettingsContent() {
   const [activeTab, setActiveTab] = React.useState('presets')
   const [showWarning, setShowWarning] = React.useState(false)
   const [pendingLeave, setPendingLeave] = React.useState(null)
+  const [searchParams] = useSearchParams()
+
+  React.useEffect(() => {
+    const tab = searchParams.get('tab')
+    if (tab && TABS.some(t => t.id === tab)) setActiveTab(tab)
+  }, [searchParams])
 
   const dismissWarning = getValue('dismiss_unsaved_warning', '') === '1'
 
@@ -102,6 +108,7 @@ function SettingsContent() {
         <button
           onClick={saveAll}
           disabled={!hasChanges || saving}
+          data-tour="settings-save"
           className={`flex items-center gap-2 px-6 py-3 border-[3px] border-black font-black text-xs uppercase tracking-wider transition-all ${
             hasChanges
               ? 'bg-orange-500 text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px]'
@@ -134,7 +141,7 @@ function SettingsContent() {
       )}
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2" data-tour="settings-tabs">
         {TABS.map(tab => (
           <TabButton key={tab.id} tab={tab} active={activeTab === tab.id} onClick={() => setActiveTab(tab.id)} />
         ))}
@@ -163,7 +170,7 @@ function SettingsContent() {
           <PlatformApiKeys />
         )}
         {activeTab === 'limits' && (
-          <div className="grid gap-6">
+          <div className="grid gap-6" data-tour="settings-limits">
             <div className="bg-white border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
               <div className="h-2 bg-orange-500 border-b-[3px] border-black" />
               <div className="px-6 py-5 border-b-[3px] border-black bg-[#f5f0eb] flex items-center gap-3">
@@ -203,7 +210,7 @@ function SettingsContent() {
           </div>
         )}
         {activeTab === 'ai' && (
-          <div className="bg-white border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+          <div className="bg-white border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden" data-tour="settings-ai">
             <div className="h-2 bg-orange-500 border-b-[3px] border-black" />
             <div className="px-6 py-5 border-b-[3px] border-black bg-[#f5f0eb] flex items-center gap-3">
               <div className="w-8 h-8 bg-orange-500 border-[2px] border-black flex items-center justify-center shrink-0">
@@ -217,7 +224,7 @@ function SettingsContent() {
           </div>
         )}
         {activeTab === 'toggles' && (
-          <div className="bg-white border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+          <div className="bg-white border-[4px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden" data-tour="settings-toggles">
             <div className="h-2 bg-orange-500 border-b-[3px] border-black" />
             <div className="px-6 py-5 border-b-[3px] border-black bg-[#f5f0eb] flex items-center gap-3">
               <div className="w-8 h-8 bg-orange-500 border-[2px] border-black flex items-center justify-center shrink-0">

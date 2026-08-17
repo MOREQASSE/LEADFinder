@@ -1,6 +1,8 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom'
 import { AuthProvider, useAuth } from './hooks/useAuth'
+import { OnboardingProvider } from './hooks/useOnboarding'
+import OnboardingOverlay from './components/Onboarding/OnboardingOverlay'
 import LoginPage from './components/Auth/LoginPage'
 import Header from './components/Layout/Header'
 import Sidebar from './components/Layout/Sidebar'
@@ -21,13 +23,16 @@ function ProtectedLayout() {
   if (!user) return <Navigate to="/login" />
 
   return (
-    <div className="flex h-screen bg-[#f5f0eb]">
-      <Sidebar open={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="flex-1 overflow-auto p-6"><Outlet /></main>
+    <OnboardingProvider>
+      <div className="flex h-screen bg-[#f5f0eb]">
+        <Sidebar open={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+          <main className="flex-1 overflow-auto p-6"><Outlet /></main>
+        </div>
       </div>
-    </div>
+      <OnboardingOverlay />
+    </OnboardingProvider>
   )
 }
 

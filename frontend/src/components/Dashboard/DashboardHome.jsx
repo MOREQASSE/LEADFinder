@@ -40,7 +40,7 @@ function DashboardHome() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="relative pb-4 mb-2">
+      <div className="relative pb-4 mb-2" data-tour="dashboard-header">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-orange-500 border-[3px] border-black flex items-center justify-center shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
             <i className="fa-solid fa-chart-simple text-white text-sm"></i>
@@ -54,7 +54,7 @@ function DashboardHome() {
       </div>
 
       {/* KPI Row 1 — Primary metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4" data-tour="dashboard-kpis">
         <KpiCard
           label="Hot Leads" value={data.hot_leads} icon="fa-fire"
           trend={data.hot_trend} trendLabel="vs last 7d"

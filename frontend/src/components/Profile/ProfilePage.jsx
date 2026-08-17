@@ -4,9 +4,9 @@ import PortfolioProjects from '../Settings/PortfolioProjects'
 import CountrySelector from '../Settings/CountrySelector'
 import { SettingsProvider } from '../../hooks/useSettings'
 
-function NeoSection({ title, icon, children }) {
+function NeoSection({ title, icon, tourId, children }) {
   return (
-    <div className="bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+    <div className="bg-white border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden" data-tour={tourId}>
       <div className="h-2 bg-orange-500 border-b-[3px] border-black" />
       <div className="px-6 py-5 border-b-[3px] border-black bg-[#f5f0eb] flex items-center gap-3">
         {icon && (
@@ -34,12 +34,12 @@ export default function ProfilePage() {
         </div>
 
         {/* Resume / Profile Data */}
-        <NeoSection title="Resume / Profile Data" icon="fa-file-lines">
+        <NeoSection title="Resume / Profile Data" icon="fa-file-lines" tourId="profile-resume">
           <ResumeUploader />
         </NeoSection>
 
         {/* Portfolio / Past Projects */}
-        <NeoSection title="Portfolio / Past Projects" icon="fa-briefcase">
+        <NeoSection title="Portfolio / Past Projects" icon="fa-briefcase" tourId="profile-portfolio">
           <PortfolioProjects />
         </NeoSection>
 
