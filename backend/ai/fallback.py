@@ -1,8 +1,11 @@
 import httpx
 import asyncio
+import logging
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from models import AIConfig
+
+logger = logging.getLogger("ai.fallback")
 
 
 def _is_token_error(e: Exception) -> bool:
@@ -33,11 +36,7 @@ async def query_llm_api(provider: str, model: str, api_key: str, prompt: str, ma
             return resp.json()["choices"][0]["message"]["content"] or ""
 
         elif provider in ("github", "azure"):
-            url = (
-                "https://models.github.ai/inference/chat/completions"
-                if provider == "github"
-                else "https://models.inference.ai.azure.com/chat/completions"
-            )
+            url = "https://models.inference.ai.azure.com/chat/completions"
             headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
             payload = {"model": model, "messages": [{"role": "user", "content": prompt}], "max_tokens": max_tokens}
             resp = await client.post(url, json=payload, headers=headers)
@@ -76,9 +75,10 @@ async def query_with_fallback(prompt: str, db: AsyncSession, max_tokens: int = 5
     result = await db.execute(select(AIConfig))
     all_configs = result.scalars().all()
     if not all_configs:
+        logger.warning("query_with_fallback: no AIConfig rows -> returning canned fallback text")
         return "I would be happy to help with your project. Let me know if you'd like to discuss further!"
 
-    sorted_configs = sorted(all_configs, key=lambda c: (c.provider not in ("github", "azure"), not c.is_primary))
+    sorted_configs = sorted(all_configs, key=lambda c: (not c.is_primary, c.provider not in ("github", "azure")))
 
     exhausted_providers: set[str] = set()
     last_error = None
@@ -90,12 +90,19 @@ async def query_with_fallback(prompt: str, db: AsyncSession, max_tokens: int = 5
             continue
 
         try:
+            logger.info("query_with_fallback: trying %s (max_tokens=%s)", model_id, max_tokens)
             return await query_llm_api(config.provider, config.model, config.api_key, prompt, max_tokens=max_tokens)
         except Exception as e:
             last_error = e
+            logger.warning("query_with_fallback: %s failed: %s", model_id, str(e)[:200])
             if _is_token_error(e):
                 exhausted_providers.add(model_id)
             if _is_retryable(e):
                 await asyncio.sleep(1)
 
+    logger.error(
+        "query_with_fallback: ALL %d config(s) failed (last: %s) -> returning canned fallback text",
+        len(sorted_configs),
+        last_error,
+    )
     return "I would be happy to help with your project. Let me know if you'd like to discuss further!"
